@@ -1,0 +1,13 @@
+.venv
+
+
+__pycache__
+whisper_large_v3
+
+Kokoro-82M
+.venv
+
+converted
+*.wav 
+uv.lock
+pyproject.toml

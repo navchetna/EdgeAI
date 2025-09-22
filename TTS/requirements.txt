@@ -1,0 +1,8 @@
+kokoro>=0.8.2
+misaki[en]>=0.8.2
+soundfile 
+transformers!=4.49.0
+openvino
+uvicorn
+fastapi
+--extra-index-url https://download.pytorch.org/whl/cpu

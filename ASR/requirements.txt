@@ -1,0 +1,10 @@
+openvino
+openvino-genai
+optimum
+optimum-intel
+transformers
+soundfile
+fastapi
+uvicorn
+loguru
+python-multipart
