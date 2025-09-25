@@ -4,13 +4,10 @@ import uvicorn
 from loguru import logger 
 from models import SpeechRequest
 
-from tts import get_tts_model, numpy_to_wav_bytes
+from tts import TTS, numpy_to_wav_bytes
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
-
-
-
 
 app = FastAPI(root_path="/v1")
 
@@ -23,10 +20,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-tts = get_tts_model(
+pipeline = TTS(
     os.getenv("MODEL_DIR", "Kokoro-82M"),
-    os.getenv("DEVICE", "cpu")
+    os.getenv("DEVICE", "CPU")
 )
+
 
 @app.post("/audio/speech")
 async def transcribe_audio(request: SpeechRequest):
@@ -34,9 +32,8 @@ async def transcribe_audio(request: SpeechRequest):
     st = time.perf_counter()
     try:
         language = request.instructions
-        generator = tts(request.input, voice=request.voice)
-        result = next(generator)
-        audio_bytes = numpy_to_wav_bytes(result.audio)
+        audio, latency = pipeline.generate_audio(request.input, voice=request.voice)
+        audio_bytes = numpy_to_wav_bytes(audio)
         latency = time.perf_counter() - st
         logger.info(f"Request processed: {latency}")
         return StreamingResponse(audio_bytes, media_type="audio/mpeg")

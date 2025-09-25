@@ -14,10 +14,9 @@
 4. Download the models
     ```hf download OpenVINO/whisper-large-v3-int4-ov --local-dir whisper_large_v3```
 
+5. Run the server
+    ```python main.py```
 
 
-## Benchmarking
-- 3 second audio
-    - GPU: 5 seconds (without warmup), after warmup (2 seconds)
-    - CPU: 12 seconds (without warmup), after warmup (9 seconds)
-    - NPU: 
+## Test 
+- Run `client.py` to access the API Endpoint

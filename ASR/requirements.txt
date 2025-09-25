@@ -8,3 +8,4 @@ fastapi
 uvicorn
 loguru
 python-multipart
+openai
