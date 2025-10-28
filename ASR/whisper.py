@@ -16,5 +16,5 @@ class Whisper:
         return audio_array, sr
 
     def generate(self, audio_array):
-        transcription = self.pipeline.generate(audio_array, task="transcribe", return_timestamps=False)
+        transcription = self.pipeline.generate(audio_array, task="transcribe", return_timestamps=False, language="<|en|>")
         return transcription
