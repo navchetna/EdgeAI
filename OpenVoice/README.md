@@ -5,6 +5,7 @@
 
 1. Open Command Prompt
 2. Run setup.bat
+    `setup.bat`
 
 ## Testing
 1. Install openai
@@ -13,20 +14,16 @@
     `python client.py`
 
 
+## NOTES
+
+- Issue 1: Install ffmpeg
+-> Ensure you have installed ffmpeg in your machine. Follow this tutorial to install ffmpeg in windows
+https://transloadit.com/devtips/how-to-install-ffmpeg-on-windows-a-complete-guide/
 
 
 
-
-
-
-- For errors like
+- Issue 2: 
 ```
 OSError: [WinError 1314] A required privilege is not held by the client: 'C:\\Users\\akulshre/.cache/torch/hub/snakers4_silero-vad_v3.0' -> 'C:\\Users\\akulshre/.cache/torch/hub/snakers4_silero-vad_master'
 ```
-- Enable Developer Mode in your windows
-
-- Error: 
-```
-RuntimeError: Problem when installing silero with version v3.0. Check versions here: https://github.com/snakers4/silero-vad/wiki/Version-history-and-Available-Models
-```
-Recreate the environment from scratch
+-> Enable Developer Mode in your windows
