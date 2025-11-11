@@ -71,9 +71,9 @@ class OpenVoiceTTS():
         return f"Audio saved at: {output_path}"
 
 
-    def generate_audio(self, text: str, voice: str = "default", language: str = "English"):
+    def generate_audio(self, text: str, voice: str = "default", language: str = "English", speed: float = 0.8):
         st = time.perf_counter()
-        audio = self.en_base_speaker_tts.tts(text, None, speaker=voice, language=language)
+        audio = self.en_base_speaker_tts.tts(text, None, speaker=voice, language=language, speed=speed)
         latency = time.perf_counter() - st
         return audio, latency
 

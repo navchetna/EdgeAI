@@ -6,6 +6,10 @@
 1. Open Command Prompt
 2. Run setup.bat
     `setup.bat`
+3. Enter the cloned directory:
+    `cd OpenVoice`
+4. Run the backend
+    `python main.py`
 
 ## Testing
 1. Install openai
