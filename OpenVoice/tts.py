@@ -18,7 +18,7 @@ class OpenVoiceTTS():
             self, 
             ov_irs_path: str = "openvino_irs", 
             ckpt_path: str = "model/checkpoints", 
-            ref_audio_path: str = "resources/demo_speaker0.mp3",
+            ref_audio_path: str = "demo_voice.wav",
             device: str = "cpu"
         ):
 
@@ -57,21 +57,22 @@ class OpenVoiceTTS():
         self.target_se, self.audio_name = se_extractor.get_se(ref_audio_path, self.tone_color_converter, target_dir=output_path, vad=True)
 
 
-    def generate_cloned_voice(self, text: str, output_path: str):
-        audio, latency = self.generate_audio(text=text)
-        self.tone_color_converter.convert(
+    def generate_cloned_voice(self, text: str):
+        st = time.perf_counter()
+        audio, _ = self.generate_audio(text=text)
+        audio = self.tone_color_converter.convert(
             audio_src_path=audio,
             src_se=self.en_source_default_se,
             tgt_se=self.target_se,
-            output_path=output_path,
+            output_path=None,
             tau=0.3,
             message="@MyShell",
         )
+        latency = time.perf_counter() - st
+        return audio, latency
 
-        return f"Audio saved at: {output_path}"
 
-
-    def generate_audio(self, text: str, voice: str = "default", language: str = "English", speed: float = 0.8):
+    def generate_audio(self, text: str, voice: str = "default", language: str = "English", speed: float = 0.9):
         st = time.perf_counter()
         audio = self.en_base_speaker_tts.tts(text, None, speaker=voice, language=language, speed=speed)
         latency = time.perf_counter() - st
@@ -111,7 +112,7 @@ def numpy_to_wav_bytes(audio: np.ndarray, sample_rate: int = 24000) -> io.BytesI
 #     tts = OpenVoiceTTS()
 #     text = "Hello world how are you doing today. I am doing really good. Let me know what you think about me today?"
 #     st = time.time()
-#     # audio = tts.generate_audio(text=text)
+#     audio = tts.generate_audio(text=text)
 #     path = Path("generated_audio") / "tmp.wav"
-#     tts.generate_cloned_voice(text, orig_voice_path=path)
+#     tts.generate_cloned_voice(text, output_path=path)
 #     print("Time: ", time.time() - st)

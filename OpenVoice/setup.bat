@@ -59,6 +59,8 @@ for %%F in (
     requirements.txt
     se_extractor_vad_fix.patch
     english.patch
+    api.patch
+    demo_voice.wav
 ) do (
     if exist "%SETUP_DIR%\%%F" (
         echo Copying %%F...
@@ -85,6 +87,12 @@ if exist se_extractor_vad_fix.patch (
 
 if exist english.patch (
     git apply english.patch
+) else (
+    echo Patch file not found, skipping patch step.
+)
+
+if exist api.patch (
+    git apply api.patch
 ) else (
     echo Patch file not found, skipping patch step.
 )
