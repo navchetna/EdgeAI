@@ -24,7 +24,7 @@ class OpenVoiceTTS():
     def __init__(
             self, 
             ov_irs_path: str = "openvino_irs", 
-            ckpt_path: str = "model/checkpoints", 
+            ckpt_path: str = "checkpoints", 
             ref_audio_path: str = "demo_voice.wav",
             device: str = "cpu"
         ):
@@ -33,30 +33,27 @@ class OpenVoiceTTS():
         self.core = ov.Core()
 
         irs_path = Path(ov_irs_path)
-        self.en_tts_ir = irs_path / "openvoice_en_tts.xml"
-        self.zh_tts_ir = irs_path / "openvoice_zh_tts.xml"
-        self.voice_converter_ir = irs_path / "openvoice_tone_conversion.xml"
+        self.en_tts_ir = irs_path / "melo_tts_en_newest.xml"
+        self.voice_converter_ir = irs_path / "openvoice2_tone_conversion.xml"
+        
         ckpt_base_path = Path(ckpt_path)
-        self.en_suffix = ckpt_base_path / "base_speakers/EN"
-        self.zh_suffix = ckpt_base_path / "base_speakers/ZH"
+
+        self.en_suffix = ckpt_base_path / "base_speakers" / "ses"
         self.converter_suffix = ckpt_base_path / "converter"
 
 
-        self.en_source_default_se = torch.load(f"{self.en_suffix}/en_default_se.pth")
-        self.en_source_style_se = torch.load(f"{self.en_suffix}/en_style_se.pth")
-        # zh_source_se = torch.load(f"{self.zh_suffix}/zh_default_se.pth") 
+        self.en_source_default_se = torch.load(f"{self.en_suffix}/en-india.pth")
 
-        self.ov_en_tts = self.core.read_model(f"{ov_irs_path}\openvoice_en_tts.xml")
-        self.ov_voice_conversion = self.core.read_model(f"{ov_irs_path}\openvoice_tone_conversion.xml")
+        self.ov_en_tts = self.core.read_model(self.en_tts_ir)
+        self.ov_voice_conversion = self.core.read_model(self.voice_converter_ir)
 
-        self.melo_tts_en_newest = BaseSpeakerTTS(self.en_suffix / "config.json", device=device)
         self.melo_tts_en_newest = TTS(
                                     "EN_NEWEST",
                                     device,
                                     use_hf=False,
-                                    config_path=self.en_suffix / "config.json",
+                                    config_path=ckpt_base_path / "MeloTTS-English-v3" /"config.json",
+                                    ckpt_path=ckpt_base_path / "MeloTTS-English-v3" / "checkpoint.pth",
                                 )                    
-        self.melo_tts_en_newest.load_ckpt(self.en_suffix / "checkpoint.pth")
         self.voice = self.melo_tts_en_newest.hps.data.spk2id
 
         self.tone_color_converter = ToneColorConverter(self.converter_suffix / "config.json", device=device)
@@ -87,9 +84,9 @@ class OpenVoiceTTS():
         return audio, latency
 
 
-    def generate_audio(self, text: str, voice: str = "EN_INDIA", language: str = "English", speed: float = 0.9):
+    def generate_audio(self, text: str, voice: str = "EN_INDIA", speed: float = 0.9):
         st = time.perf_counter()
-        audio = self.melo_tts_en_newest.tts(text, self.voice[voice], language=language, speed=speed)
+        audio = self.melo_tts_en_newest.tts_to_file(text, 0, None, speed=speed)
         latency = time.perf_counter() - st
         return audio, latency
 
@@ -153,12 +150,13 @@ def numpy_to_wav_bytes(audio: np.ndarray, sample_rate: int = 24000) -> io.BytesI
     return buf
 
 
-# if __name__ == "__main__":
-#     import time
-#     tts = OpenVoiceTTS()
-#     text = "Hello world how are you doing today. I am doing really good. Let me know what you think about me today?"
-#     st = time.time()
-#     audio = tts.generate_audio(text=text)
-#     path = Path("generated_audio") / "tmp.wav"
-#     tts.generate_cloned_voice(text, output_path=path)
-#     print("Time: ", time.time() - st)
+if __name__ == "__main__":
+    import time
+    tts = OpenVoiceTTS()
+    text = "Hello world how are you doing today. I am doing really good. Let me know what you think about me today?"
+    st = time.time()
+    audio, _ = tts.generate_audio(text=text)
+    print(audio)
+    # path = Path("generated_audio") / "tmp.wav"
+    # tts.generate_cloned_voice(text, output_path=path)
+    # print("Time: ", time.time() - st)

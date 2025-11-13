@@ -35,7 +35,10 @@ call .venv\Scripts\activate
 
 :: 2. Install requirements
 echo [3/13] Installing dependencies...
-uv pip install -r requirements.txt
+uv pip install -r requirements.txt --index-strategy unsafe-best-match
+python -m nltk.downloader averaged_perceptron_tagger_eng
+python -m nltk.downloader punkt
+python -m nltk.downloader wordnet
 if errorlevel 1 (
     echo Dependency installation failed.
     pause
@@ -98,7 +101,7 @@ for %%F in (
 
 :: 6. Download the model from Hugging Face
 echo [7/13] Downloading OpenVoice model...
-hf download myshell-ai/OpenVoice --local-dir checkpoints
+hf download myshell-ai/OpenVoiceV2 --local-dir checkpoints
 hf download myshell-ai/MeloTTS-English-v3 --local-dir checkpoints/MeloTTS-English-v3
 
 :: 6. Move into OpenVoice directory

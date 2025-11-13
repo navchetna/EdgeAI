@@ -186,4 +186,4 @@ for model, path in zip(models, paths):
         ov_model = core.read_model(path)
     ov_models.append(ov_model)
 
-ov_en_tts, ov_zh_tts, ov_voice_conversion = ov_models
+ov_en_tts, ov_voice_conversion = ov_models

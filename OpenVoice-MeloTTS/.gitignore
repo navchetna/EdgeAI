@@ -3,3 +3,9 @@ OpenVoice
 MeloTTS
 __pycache__
 checkpoints
+openvino_irs
+
+.gitattributes
+base_speakers
+checkpoints
+converter
