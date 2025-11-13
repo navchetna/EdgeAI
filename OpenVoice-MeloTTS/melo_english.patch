@@ -1,0 +1,28 @@
+diff --git a/melo/text/english.py b/melo/text/english.py
+index d1152fe..dca8b70 100644
+--- a/melo/text/english.py
++++ b/melo/text/english.py
+@@ -8,7 +8,6 @@ from . import symbols
+ from .english_utils.abbreviations import expand_abbreviations
+ from .english_utils.time_norm import expand_time_english
+ from .english_utils.number_norm import normalize_numbers
+-from .japanese import distribute_phone
+ 
+ from transformers import AutoTokenizer
+ 
+@@ -92,6 +91,15 @@ arpa = {
+ }
+ 
+ 
++def distribute_phone(n_phone, n_word):
++    phones_per_word = [0] * n_word
++    for task in range(n_phone):
++        min_tasks = min(phones_per_word)
++        min_index = phones_per_word.index(min_tasks)
++        phones_per_word[min_index] += 1
++    return phones_per_word
++
++
+ def post_replace_ph(ph):
+     rep_map = {
+         "：": ",",

@@ -1,0 +1,16 @@
+diff --git a/openvoice/api.py b/openvoice/api.py
+index 48f7eeb..fe70435 100644
+--- a/openvoice/api.py
++++ b/openvoice/api.py
+@@ -141,8 +141,9 @@ class ToneColorConverter(OpenVoiceBaseClass):
+     def convert(self, audio_src_path, src_se, tgt_se, output_path=None, tau=0.3, message="default"):
+         hps = self.hps
+         # load audio
+-        audio, sample_rate = librosa.load(audio_src_path, sr=hps.data.sampling_rate)
+-        audio = torch.tensor(audio).float()
++        if isinstance(audio_src_path, str):
++            audio, sample_rate = librosa.load(audio_src_path, sr=hps.data.sampling_rate)
++        audio = torch.tensor(audio_src_path).float()
+         
+         with torch.no_grad():
+             y = torch.FloatTensor(audio).to(self.device)

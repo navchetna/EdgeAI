@@ -1,0 +1,31 @@
+diff --git a/openvoice/text/english.py b/openvoice/text/english.py
+index 736a53a..d9e88ae 100644
+--- a/openvoice/text/english.py
++++ b/openvoice/text/english.py
+@@ -7,7 +7,7 @@ Cleaners can be selected by passing a comma-delimited list of cleaner names as t
+ hyperparameter. Some cleaners are English-specific. You'll typically want to use:
+   1. "english_cleaners" for English text
+   2. "transliteration_cleaners" for non-English text that can be transliterated to ASCII using
+-     the Unidecode library (https://pypi.python.org/pypi/Unidecode)
++     the anyascii library (https://pypi.python.org/pypi/anyascii)
+   3. "basic_cleaners" if you do not want to transliterate (in this case, you should also update
+      the symbols in symbols.py to match your data).
+ '''
+@@ -18,7 +18,7 @@ hyperparameter. Some cleaners are English-specific. You'll typically want to use
+ 
+ import re
+ import inflect
+-from unidecode import unidecode
++from anyascii import anyascii
+ import eng_to_ipa as ipa
+ _inflect = inflect.engine()
+ _comma_number_re = re.compile(r'([0-9][0-9\,]+[0-9])')
+@@ -158,7 +158,7 @@ def mark_dark_l(text):
+ 
+ 
+ def english_to_ipa(text):
+-    text = unidecode(text).lower()
++    text = anyascii(text).lower()
+     text = expand_abbreviations(text)
+     text = normalize_numbers(text)
+     phonemes = ipa.convert(text)

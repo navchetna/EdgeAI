@@ -1,0 +1,5 @@
+.venv
+OpenVoice
+MeloTTS
+__pycache__
+checkpoints
