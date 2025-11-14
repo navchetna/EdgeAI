@@ -26,7 +26,7 @@ class OpenVoiceTTS():
             ov_irs_path: str = "openvino_irs", 
             ckpt_path: str = "checkpoints", 
             ref_audio_path: str = "demo_voice.wav",
-            device: str = "cpu"
+            device: str = "cpu",
         ):
 
         DEVICE = "CPU"
@@ -84,7 +84,7 @@ class OpenVoiceTTS():
         return audio, latency
 
 
-    def generate_audio(self, text: str, voice: str = "EN_INDIA", speed: float = 0.9):
+    def generate_audio(self, text: str, voice: str = "EN_INDIA", speed: float = 0.8):
         st = time.perf_counter()
         audio = self.melo_tts_en_newest.tts_to_file(text, 0, None, speed=speed)
         latency = time.perf_counter() - st
@@ -143,7 +143,7 @@ class OpenVoiceTTS():
 
         
 
-def numpy_to_wav_bytes(audio: np.ndarray, sample_rate: int = 24000) -> io.BytesIO:        
+def numpy_to_wav_bytes(audio: np.ndarray, sample_rate: int = 44100) -> io.BytesIO:        
     buf = io.BytesIO()
     sf.write(buf, audio, sample_rate, format="WAV", subtype="PCM_16")
     buf.seek(0)
@@ -155,8 +155,8 @@ if __name__ == "__main__":
     tts = OpenVoiceTTS()
     text = "Hello world how are you doing today. I am doing really good. Let me know what you think about me today?"
     st = time.time()
-    audio, _ = tts.generate_audio(text=text)
-    print(audio)
+    audio, tt = tts.generate_audio(text=text)
+    print(tt)
     # path = Path("generated_audio") / "tmp.wav"
     # tts.generate_cloned_voice(text, output_path=path)
     # print("Time: ", time.time() - st)

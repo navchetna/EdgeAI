@@ -171,7 +171,7 @@ VOICE_CONVERTER_IR = IRS_PATH / "openvoice2_tone_conversion.xml"
 
 paths = [EN_TTS_IR, VOICE_CONVERTER_IR]
 models = [
-    OVSynthesizerTTSWrapper(melo_tts_en_newest.model, "EN_NEWEST"),
+    OVSynthesizerTTSWrapper(melo_tts_en_newest.model, "EN_INDIA"),
     OVOpenVoiceConverter(tone_color_converter),
 ]
 

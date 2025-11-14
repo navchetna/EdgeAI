@@ -29,7 +29,7 @@ async def generate_audio(request: SpeechRequest):
     st = time.perf_counter()
     try:
         language = request.instructions
-        audio, latency = pipeline.generate_cloned_voice(request.input)
+        audio, latency = pipeline.generate_audio(request.input)
         audio_bytes = numpy_to_wav_bytes(audio)
         latency = time.perf_counter() - st
         logger.info(f"Request processed: {latency}")
