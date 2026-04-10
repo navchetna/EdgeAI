@@ -2,23 +2,11 @@
 This directory contains scripts and instructions to optimize the IndicWav2vec ASR models for better performance and efficiency.
 
 
-## Setup
-
-### Method 1: Using Makefile
-1. Ensure you have `uv` (Universal Virtualenv) installed. If not, install it using:
-    ```bash
-    pip install uv
-    ```
-2. Run the setup command:
-    ```bash
-    make setup
-    ``` 
-
-### Method 2: Manual setup
+## Setup: Installation
 1. Create a virtual environment and activate it:
     ```bash
     uv venv --python=3.10
-    source .venv/bin/activate
+    .venv\Scripts\activate
     ```
 2. Install the dependencies:
     ```bash
