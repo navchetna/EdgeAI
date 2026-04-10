@@ -1,0 +1,8 @@
+noisereduce
+indic_unified_parser
+espnet
+matplotlib
+pandas
+indic-num2words
+librosa
+numpy
