@@ -1,0 +1,13 @@
+# Supertonic TTS - OpenVINO Edition
+# Core dependencies
+numpy
+openvino
+
+# Audio I/O (choose one)
+soundfile
+librosa
+# scipy
+
+# Original ONNX Runtime support (optional, for helper.py)
+onnx
+onnxruntime

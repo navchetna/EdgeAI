@@ -11,3 +11,6 @@ converted
 *.wav 
 uv.lock
 pyproject.toml
+
+ov_model_fp16
+supertonic-3
