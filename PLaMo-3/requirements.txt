@@ -1,0 +1,8 @@
+openvino>=2025.2
+openvino-tokenizers>=2025.2
+transformers>=4.56
+torch
+numpy
+sentencepiece
+protobuf
+accelerate
