@@ -6,3 +6,4 @@ numpy
 sentencepiece
 protobuf
 accelerate
+numba
